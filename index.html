@@ -2332,8 +2332,8 @@
           <div><input name="Year" placeholder="Vehicle year" required></div>
           <div><input name="Make/Model" placeholder="Make / Model" required></div>
           <div class="full"><select name="Service" required></select></div>
-          <div><input name="Date" type="date" required></div>
-          <div><input name="Time" type="time" required></div>
+          <div><input name="Date" id="appointmentDate" type="date" required></div>
+          <div><input name="Time" id="appointmentTime" type="time" step="60" required></div>
           <div class="full"><textarea name="Problem" rows="2" placeholder="Describe the problem"></textarea></div>
           <button class="btn full" style="justify-content:center">Book Appointment</button>
         </form>
@@ -2496,6 +2496,53 @@ ${H2("How It Works")}<div class="ps">${STEPS.map((x, j) => `<div><i>${j + 1}</i>
     });
     addEventListener("hashchange", svRoute); addEventListener("popstate", svRoute); svRoute();
   </script>
-</body>
 
+<script>
+(function () {
+  const date = document.getElementById("appointmentDate");
+  const time = document.getElementById("appointmentTime");
+  const form = document.getElementById("f1");
+
+  if (!date || !time || !form) return;
+
+  function checkHours() {
+    if (!date.value) {
+      time.min = "";
+      time.max = "";
+      time.setCustomValidity("");
+      return;
+    }
+
+    const sunday =
+      new Date(date.value + "T12:00:00").getDay() === 0;
+
+    const open = sunday ? "10:00" : "08:00";
+    const close = sunday ? "20:00" : "22:00";
+
+    time.min = open;
+    time.max = close;
+
+    const invalid = time.value &&
+      (time.value < open || time.value > close);
+
+    time.setCustomValidity(
+      invalid ? "Please select a time during business hours." : ""
+    );
+  }
+
+  date.addEventListener("change", checkHours);
+  time.addEventListener("input", checkHours);
+
+  form.addEventListener("submit", function (e) {
+    checkHours();
+    if (!time.checkValidity()) {
+      e.preventDefault();
+      time.reportValidity();
+    }
+  });
+
+  checkHours();
+})();
+</script>
+</body>
 </html>
