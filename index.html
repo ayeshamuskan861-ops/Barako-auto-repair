@@ -2095,6 +2095,34 @@
 .time-field input:valid + span {
   display: none;
 }
+#book form > div {
+  min-width: 0;
+  max-width: 100%;
+}
+
+#appointmentDate,
+#appointmentTime {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  height: 46px;
+  font-size: 16px;
+  text-align: left;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+#appointmentDate::-webkit-date-and-time-value,
+#appointmentTime::-webkit-date-and-time-value {
+  text-align: left;
+}
+
+.time-field span {
+  font-size: 16px;
+  color: #999;
+}
   </style>
 </head>
 
