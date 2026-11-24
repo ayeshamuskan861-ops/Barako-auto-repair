@@ -2067,6 +2067,34 @@
     @media(max-width:860px){.sh .wrap,.sb{grid-template-columns:1fr}.sd{position:static}.ps{grid-template-columns:repeat(2,1fr)}.dl{grid-template-columns:1fr}}
     @media(max-width:860px){.sh .wrap{gap:20px;padding-top:20px;padding-bottom:26px}.sh img{order:-1;aspect-ratio:4/3}.sb{gap:28px;padding-top:28px}.sm h2{font-size:23px;margin-top:28px}}
     @media(max-width:520px){.sh .ctas .btn{flex:1 1 100%;justify-content:center}.pg{gap:8px}.pg figcaption{font-size:12px}.ps{gap:8px}.ps div{padding:12px}.pn{flex-direction:column;align-items:flex-start}}
+  .time-field {
+  position: relative;
+  min-width: 0;
+}
+
+.time-field input {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.time-field input:invalid:not(:focus) {
+  color: transparent;
+}
+
+.time-field span {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #999;
+  pointer-events: none;
+}
+
+.time-field input:focus + span,
+.time-field input:valid + span {
+  display: none;
+}
   </style>
 </head>
 
@@ -2333,7 +2361,7 @@
           <div><input name="Make/Model" placeholder="Make / Model" required></div>
           <div class="full"><select name="Service" required></select></div>
           <div><input name="Date" id="appointmentDate" type="date" required></div>
-          <div><input name="Time" id="appointmentTime" type="time" step="60" required></div>
+          <div class="time-field"><input name="Time" id="appointmentTime" type="time" step="60" required><span>Select Time</span></div>
           <div class="full"><textarea name="Problem" rows="2" placeholder="Describe the problem"></textarea></div>
           <button class="btn full" style="justify-content:center">Book Appointment</button>
         </form>
